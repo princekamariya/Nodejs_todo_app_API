@@ -18,7 +18,7 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         // in ref ye jo id hai wo kiski hogi , in this case it is of "User" , make sure ref will be of collection.
-        required: true
+        required: true,
     },
     createdAt: {
         type: Date,
@@ -26,4 +26,4 @@ const schema = new mongoose.Schema({
     },
 });
 
-export const Iask = mongoose.model("Task", schema);
+export const Task = mongoose.model("Task", schema);
