@@ -33,12 +33,7 @@ export const updateTask = async (req, res, next) => {
     const id = req.params.id;
     const task = await Task.findById(id);
 
-    if (!task) {
-        return res.status(404).json({
-            success: false,
-            message: "Invalid Id or Task not found",
-        });
-    }
+    if (!task) return next(new Error("Invalid ID or Task not found!"));
 
     task.isCompleted = !task.isCompleted;
 
@@ -54,12 +49,8 @@ export const deleteTask = async (req, res, next) => {
     const { id } = req.params;
     const task = await Task.findById(id);
 
-    if (!task) {
-        return res.status(404).json({
-            success: false,
-            message: "Invalid Id or Task not found",
-        });
-    }
+    // we have inbuilt class of error.
+    if (!task) return next(new Error("Invalid ID"));
 
     await task.deleteOne();
 
