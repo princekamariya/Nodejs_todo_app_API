@@ -2,14 +2,13 @@ import { User } from "../model/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendCookie } from "../utils/features.js";
-export const getAllUsers = async (req, res) => {};
 
 export const register = async (req, res) => {
     const { name, email, password } = req.body;
 
     let user = await User.findOne({ email });
 
-    if (user) {
+    if (user) {  // for maintain clean code here also use that : return next(new ErrorHandler("Invalid ID or Task not found!", 404)); our error handler insted of thia return statement below
         return res.status(404).json({
             success: false,
             message: "User Already Exist",

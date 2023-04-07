@@ -1,3 +1,4 @@
+import { ErrorHandler } from "../middlewares/error.js";
 import { Task } from "../model/task.js";
 
 export const newTask = async (req, res, next) => {
@@ -33,7 +34,8 @@ export const updateTask = async (req, res, next) => {
     const id = req.params.id;
     const task = await Task.findById(id);
 
-    if (!task) return next(new Error("Invalid ID or Task not found!"));
+    if (!task)
+        return next(new ErrorHandler("Invalid ID or Task not found!", 404)); // if we use inbuilt Error class then we can only pass message like : return next(new Error("Invalid ID or Task not found!"))
 
     task.isCompleted = !task.isCompleted;
 
@@ -49,8 +51,7 @@ export const deleteTask = async (req, res, next) => {
     const { id } = req.params;
     const task = await Task.findById(id);
 
-    // we have inbuilt class of error.
-    if (!task) return next(new Error("Invalid ID"));
+    if (!task) return next(new ErrorHandler("Invalid ID", 404));
 
     await task.deleteOne();
 
