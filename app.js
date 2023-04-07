@@ -4,6 +4,7 @@ import taskRouter from "./routes/task.js";
 
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
+import { errorMiddleware } from "./middlewares/error.js";
 
 export const app = express();
 
@@ -29,12 +30,7 @@ app.get("/", (req, res) => {
     res.send("Nice Working");
 });
 
-//
+// Using error middleware
 // how can that handler know that that is error handler middleware so here first parameter is error then req,res,next is the parameter.
 // so whenever from taks's any function or handler we call next() while passing an error then that fucntion execution will be stop and direct this error handler will be called.
-app.use((err, req, res, next) => {
-    return res.status(404).json({
-        success: false,
-        message: err.message,
-    });
-});
+app.use(errorMiddleware);
