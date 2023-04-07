@@ -66,21 +66,32 @@ export const login = async (req, res, next) => {
 
 export const getMyProfile = async (req, res) => {
     // so user get their profile using user id which we can access from token because we have given id inside token already
-    const { token } = req.cookies;
-    console.log(token);
+    // const { token } = req.cookies;
+    // console.log(token);
 
-    if (!token) {
-        return res.status(404).json({
-            success: false,
-            message: "Not Logged In",
-        });
-    }
+    // if (!token) {
+    //     return res.status(404).json({
+    //         success: false,
+    //         message: "Not Logged In",
+    //     });
+    // }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await User.findById(decoded._id);
+    // const user = await User.findById(decoded._id);
+    // this all above code is in middleware/auth.js , it is code to check user is authenticated or not ? so this may be needs to check in many routes so we moved into middlewares folder so we can use it anywhere without any repetation and we save user inside req.user
     res.status(200).json({
         success: true,
-        user,
+        user: req.user,
     });
+};
+
+export const logout = (req, res) => {
+    // here we destroy our cookie so we will empty our token cookie and expires it when user go to logout route
+    res.status(200)
+        .cookie("token", "", { expires: new Date(Date.now()) })
+        .json({
+            success: true,
+            user: req.user,
+        });
 };

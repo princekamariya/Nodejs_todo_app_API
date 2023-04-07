@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
         default: false,
     },
     user: {
-        // here in user  there will be user id who created task/
+        // here in user there will be user id who created task/
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         // in ref ye jo id hai wo kiski hogi , in this case it is of "User" , make sure ref will be of collection.

@@ -3,8 +3,10 @@ import {
     getAllUsers,
     getMyProfile,
     login,
+    logout,
     register,
 } from "../controllers/user.js";
+import { isAuthenticated } from "../middlewares/auth.js";
 
 // after this we can do router.get() router.post() like this instead of app.get() app.post() etc. so basically we can use router instead of app
 const router = express.Router();
@@ -16,6 +18,8 @@ router.post("/new", register);
 
 router.post("/login", login);
 
-router.get("/me", getMyProfile);
+router.get("/logout", logout);
+
+router.get("/me", isAuthenticated, getMyProfile);
 
 export default router;
