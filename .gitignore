@@ -1,4 +1,4 @@
-# /data/config.env => need to add this so not upload on github
+/data/config.env 
 
 # Logs
 logs
