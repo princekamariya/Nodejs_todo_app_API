@@ -97,7 +97,11 @@ export const getMyProfile = async (req, res) => {
 export const logout = (req, res) => {
     // here we destroy our cookie so we will empty our token cookie and expires it when user go to logout route
     res.status(200)
-        .cookie("token", "", { expires: new Date(Date.now()) })
+        .cookie("token", "", {
+            expires: new Date(Date.now()),
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true,
+        })
         .json({
             success: true,
             user: req.user,

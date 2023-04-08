@@ -5,6 +5,7 @@ import taskRouter from "./routes/task.js";
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
 import { errorMiddleware } from "./middlewares/error.js";
+import cors from "cors";
 
 export const app = express();
 
@@ -19,6 +20,14 @@ config({
 app.use(express.json());
 // NOTE: Make sure you use this express.json() above this routers here that is userRouter otherwise when we are using routers this express.json() will be not used. so might give error.
 app.use(cookieParser());
+app.use(
+    cors({
+        origin: [process.env.FRONTEND_URL], // whichever website url we give here that website's req will be allowed other site's req will be blocked.
+        methods: ["GET", "POST", "PUT", "DELETE"], // This all methods allowed
+        credentials: true, // if we dont set it true then credentials will be not reach to frontend means cookies and etc. will not go to frontend
+    })
+);
+// we can give options here in cors
 
 // Using routes
 // so how we using this all routes present inside routes/user.js into app.js : using app.use() and inside place userRouter which is name of your routes file

@@ -7,6 +7,9 @@ export const sendCookie = (user, res, message, statusCode = 200) => {
         .cookie("token", token, {
             httpOnly: true,
             maxAge: 15 * 60 * 1000, // this is same as expires
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true,
+            // make sure to add last two option here used ,that passed to logout also otherwise it will not work
         })
         .json({
             success: true,
